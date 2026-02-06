@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 
-app = FastAPI()
+app = FastAPI(title = "Taller Mecanico")
 
 class Cliente(BaseModel):
     id:int

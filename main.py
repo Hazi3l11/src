@@ -6,27 +6,52 @@ app = FastAPI()
 
 #Modelos
 class Cliente(BaseModel):
-    id:int
+    id_cliente:int
     nombre:str
     email:str
     telefono:str
 
 class Vehiculo(BaseModel):
     id:int
-    id_cliente:int
     marca: str
     modelo: str
+    año: int
+    cliente_id: int
 
-class Orden_Servicio(BaseModel):
+class Servicio(BaseModel):
     id:int
-    id_vehiculo:int
+    descripcion: str
     costo: float
+    vehiculo_id:int
 
-cliente: List [Cliente] = []
-vehiculo: list [Vehiculo] = []
-orden_servicio: list [Orden_Servicio] = []
+clientes: List [Cliente] = []
+vehiculos: list [Vehiculo] = []
+servicios: list [Servicio] = []
+#Clientes
+@app.post("/clientes/")
+def crear_cliente(cliente: Cliente):
+    clientes.append(cliente)
+    return {"msg": "Cliente agregado", "cliente": cliente}
 
-#Definir los Endpoints
-@app.get("/clientes", response_model=List[Cliente])
+@app.get("/clientes/")
 def mostrar_clientes():
-    return cliente
+    return clientes
+
+#Vehiculos
+@app.post("/vehiculos/")
+def crear_vehiculo(vehiculo: Vehiculo):
+    vehiculos.append(vehiculo)
+    return {"msg": "Vehiculo agregado", "vehiculo": vehiculo}
+
+@app.get("/vehiculos/")
+def mostrar_vehiculos():
+    return vehiculos
+#Servicios
+@app.post("/servicios/")
+def crear_servicio(servicio: Servicio):
+    servicios.append(servicio)
+    return {"msg": "Servicio agregado", "servicio": servicio}
+
+@app.get("/servicios/")
+def mostrar_servicios():
+    return servicios
